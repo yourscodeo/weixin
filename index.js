@@ -103,7 +103,9 @@ async function initDay() {
     let contact =
       (await bot.Contact.find({ name: config.NICKNAME })) ||
       (await bot.Contact.find({ alias: config.NAME })); // 获取你要发送的联系人
-    let one = await superagent.getOne(); //获取每日一句
+    // let one = await superagent.getOne(); //获取每日一句
+    let one = await superagent.getStock(); //获取每日一句
+    console.log(one);
     let weather = await superagent.getTXweather(); //获取天气信息
     let today = await untils.formatDate(new Date()); //获取今天的日期
     let memorialDay = untils.getDay(config.MEMORIAL_DAY); //获取纪念日天数
@@ -111,7 +113,8 @@ async function initDay() {
     
     // 你可以修改下面的 str 来自定义每日说的内容和格式
     // PS: 如果需要插入 emoji(表情), 可访问 "https://getemoji.com/" 复制插入
-    let str = `${today}\n我们在一起的第${memorialDay}天\n\n元气满满的一天开始啦,要开心噢^_^\n\n今日天气\n${weather.todayWeather}\n${weather.weatherTips}，\n每日一句:\n${one}\n\n每日土味情话：\n${sweetWord}\n\n————————最爱你的我`;
+    // let str = `${today}\n我们在一起的第${memorialDay}天\n\n元气满满的一天开始啦,要开心噢^_^\n\n今日天气\n${weather.todayWeather}\n${weather.weatherTips}，\n每日一句:\n${one}\n\n每日土味情话：\n${sweetWord}\n\n————————早日发财！`;
+    let str = `${today}\n\n今日天气\n${weather.todayWeather}\n${weather.weatherTips}，\n\n${one}\n\n        ————— For Freedom！`;
     try {
       logMsg = str;
       await delay(2000);

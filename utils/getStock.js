@@ -26,15 +26,25 @@ function getStockCodes() {
 var stockCodes = getStockCodes();
 // var stockCodes = [ '0603663', '0603043', '0600031', '0600111' ]
 
+var html = ``;
+function displayData(data){
+html = ``
+data.map(item =>{
+    html += `【今日行情】\n${item.name}：今开：${item.open},昨收${item.yestclose}
+    最高：${item.high} 最低：${item.low},涨跌：${item.updown},涨跌幅：${item.percent}，${item.arrow}\n`
+})
+// console.log(html);
+}
+
 async function fetchAllData() {
 	console.log('fetchAllData');
 	axios
 		.get(`${baseUrl}${stockCodes.join(',')}?callback=a`)
 		.then(
 			(rep) => {
+                var data = [];
                 try {
                     const result = JSON.parse(rep.data.slice(2, -2));
-					let data = [];
 					Object.keys(result).map((item) => {
                         if (!result[item].code) {
                             result[item].code = item; //兼容港股美股
@@ -43,7 +53,7 @@ async function fetchAllData() {
 					});
                     // console.log(data);
                     //写一个display函数用于遍历展示这个这些数据
-					// displayData(data);
+					displayData(data);
 				} catch (error) {}
 			},
 			(error) => {
@@ -53,9 +63,11 @@ async function fetchAllData() {
 		.catch((error) => {
 			console.error(error);
 		});
+        return html
 }
 fetchAllData()
 console.log(fetchAllData());
-// module.exports = {
-//     fetchAllData
-// }
+module.exports = {
+    fetchAllData,
+    html
+}

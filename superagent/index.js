@@ -8,7 +8,13 @@ let uniqueId = md5.update(machineIdSync()).digest('hex'); // 获取机器唯一�
 const ONE = 'http://wufazhuce.com/'; // ONE的web版网站
 const TXHOST = 'http://api.tianapi.com/txapi/'; // 天行host
 const TULINGAPI = 'http://www.tuling123.com/openapi/api'; // 图灵1.0接口api
-const fetchAllData = require('../utils/getStock')
+const {fetchAllData,html} = require('../utils/getStock')
+
+async function getStock(){
+    
+    return fetchAllData()
+}
+
 
 async function getOne() {
     // 获取每日一句
@@ -173,6 +179,7 @@ async function getRubbishType(word) {
 }
 
 module.exports = {
+    getStock,
     getOne,
     getTXweather,
     getReply,
