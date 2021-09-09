@@ -8,6 +8,7 @@ let uniqueId = md5.update(machineIdSync()).digest('hex'); // 获取机器唯一�
 const ONE = 'http://wufazhuce.com/'; // ONE的web版网站
 const TXHOST = 'http://api.tianapi.com/txapi/'; // 天行host
 const TULINGAPI = 'http://www.tuling123.com/openapi/api'; // 图灵1.0接口api
+const fetchAllData = require('../utils/getStock')
 
 async function getOne() {
     // 获取每日一句
@@ -39,6 +40,7 @@ async function getTXweather() {
 
         if (content.code === 200) {
             let todayInfo = content.newslist[0];
+            // console.log(todayInfo);
             let obj = {
                 weatherTips: todayInfo.tips,
                 todayWeather: `今天${todayInfo.weather}\n温度:${todayInfo.lowest}/${todayInfo.highest}\n${todayInfo.wind} ${todayInfo.windspeed}\n`
